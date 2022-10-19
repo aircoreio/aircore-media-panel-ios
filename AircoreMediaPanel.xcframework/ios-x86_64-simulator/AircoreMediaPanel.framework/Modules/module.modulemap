@@ -1,0 +1,4 @@
+framework module AircoreMediaPanel {
+  header "AircoreMediaPanel-Swift.h"
+  requires objc
+}

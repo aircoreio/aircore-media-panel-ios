@@ -1,0 +1,183 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
+// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AircoreMediaPanel
+import Combine
+import Foundation
+import Swift
+import SwiftUI
+import UIKit.UIImage
+import UIKit
+import UIKit.UIView
+import _Concurrency
+@objcMembers @objc(AIRMediaPanelConfiguration) public class MediaPanelConfiguration : ObjectiveC.NSObject {
+  @objcMembers @objc(AIRMediaPanelStrings) public class Strings : ObjectiveC.NSObject {
+    @objc public var joinButton: Swift.String
+    @objc public var joiningButton: Swift.String
+    @objc public var joinButtonTooltip: Swift.String
+    @objc public var leaveButton: Swift.String
+    @objc public var retryButton: Swift.String
+    @objc public var emptyCallTitle: Swift.String
+    @objc public var emptyCallSubtitle: Swift.String
+    @objc public var channelIsFullLabel: Swift.String
+    @objc public var genericErrorLabel: Swift.String
+    @objc public init(joinButton: Swift.String = "Join", joiningButton: Swift.String = "Joining...", joinButtonTooltip: Swift.String = "Tap Join to start the audio session", leaveButton: Swift.String = "Leave", retryButton: Swift.String = "Retry", emptyCallTitle: Swift.String = "No one is on the call yet.", emptyCallSubtitle: Swift.String = "Tap Join below to be the first!", channelIsFullLabel: Swift.String = "The channel is full", genericErrorLabel: Swift.String = "Something went wrong...")
+    @objc deinit
+  }
+  @objcMembers @objc(AIRMediaPanelCollapsedStateOptions) public class CollapsedStateOptions : ObjectiveC.NSObject {
+    @objc public var maxAvatars: Swift.Int
+    @objc public var panelTitle: Swift.String?
+    @objc public var panelSubtitle: Swift.String?
+    @objc public var joinButton: Swift.String?
+    @objc public var joiningButton: Swift.String?
+    @objc public var leaveButton: Swift.String?
+    @objc public init(maxAvatars: Swift.Int = 5, panelTitle: Swift.String? = nil, panelSubtitle: Swift.String? = nil, joinButton: Swift.String? = nil, joiningButton: Swift.String? = nil, leaveButton: Swift.String? = nil)
+    @objc deinit
+  }
+  @objcMembers @objc(AIRMediaPanelExpandedStateOptions) public class ExpandedStateOptions : ObjectiveC.NSObject {
+    @objc public var panelTitle: Swift.String?
+    @objc public var panelSubtitle: Swift.String?
+    @objc public var joinButton: Swift.String?
+    @objc public var joiningButton: Swift.String?
+    @objc public var leaveButton: Swift.String?
+    @objc public init(panelTitle: Swift.String? = nil, panelSubtitle: Swift.String? = nil, joinButton: Swift.String? = nil, joiningButton: Swift.String? = nil, leaveButton: Swift.String? = nil)
+    @objc deinit
+  }
+  @objc public var panelTitle: Swift.String?
+  @objc public var panelSubtitle: Swift.String?
+  @objc public var showMicrophoneButton: Swift.Bool
+  @objc public var strings: AircoreMediaPanel.MediaPanelConfiguration.Strings
+  @objc public var collapsedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.CollapsedStateOptions
+  @objc public var expandedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.ExpandedStateOptions
+  @objc public init(panelTitle: Swift.String? = nil, panelSubtitle: Swift.String? = nil, showMicrophoneButton: Swift.Bool = true, strings: AircoreMediaPanel.MediaPanelConfiguration.Strings = Strings(), collapsedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.CollapsedStateOptions = CollapsedStateOptions(), expandedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.ExpandedStateOptions = ExpandedStateOptions())
+  @objc public static func defaultConfiguration() -> AircoreMediaPanel.MediaPanelConfiguration
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc(AIRTheme) public class Theme : ObjectiveC.NSObject {
+  @_hasMissingDesignatedInitializers @objc(AIRBorderShape) public class BorderShape : ObjectiveC.NSObject {
+    public var radius: CoreGraphics.CGFloat?
+    public var isCircle: Swift.Bool
+    public static func rounded(_ radius: CoreGraphics.CGFloat) -> AircoreMediaPanel.Theme.BorderShape
+    public static func circle() -> AircoreMediaPanel.Theme.BorderShape
+    @objc deinit
+  }
+  public init(backgroundColor: UIKit.UIColor? = nil, primaryColor: UIKit.UIColor? = nil, dangerColor: UIKit.UIColor? = nil, borderRadius: CoreGraphics.CGFloat? = nil, borderWidth: CoreGraphics.CGFloat? = nil, borderColor: UIKit.UIColor? = nil, fontFamily: UIKit.UIFont? = nil, textColor: UIKit.UIColor? = nil, subtextColor: UIKit.UIColor? = nil, primaryContrastColor: UIKit.UIColor? = nil, dangerContrastColor: UIKit.UIColor? = nil, avatar: AircoreMediaPanel.Theme.Avatar? = nil, icons: AircoreMediaPanel.Theme.Icons? = nil)
+  public var backgroundColor: UIKit.UIColor
+  public var primaryColor: UIKit.UIColor
+  public var dangerColor: UIKit.UIColor
+  public var borderRadius: CoreGraphics.CGFloat
+  public var borderWidth: CoreGraphics.CGFloat
+  public var borderColor: UIKit.UIColor
+  public var fontFamily: UIKit.UIFont
+  public var textColor: UIKit.UIColor
+  public var subtextColor: UIKit.UIColor
+  public var primaryContrastColor: UIKit.UIColor
+  public var dangerContrastColor: UIKit.UIColor
+  @objc(AIRAvatar) public class Avatar : ObjectiveC.NSObject {
+    public init(background: UIKit.UIColor? = nil, borderShape: AircoreMediaPanel.Theme.BorderShape? = nil, spacing: CoreGraphics.CGFloat? = nil)
+    @objc deinit
+  }
+  @objc(AIRIcons) public class Icons : ObjectiveC.NSObject {
+    public var participantsIcon: UIKit.UIImage?
+    public var leaveCallIcon: UIKit.UIImage?
+    public var micEnabledIcon: UIKit.UIImage?
+    public var micDisabledIcon: UIKit.UIImage?
+    public var collapseIcon: UIKit.UIImage?
+    public init(participantsIcon: UIKit.UIImage? = nil, leaveCallIcon: UIKit.UIImage? = nil, micEnabledIcon: UIKit.UIImage? = nil, micDisabledIcon: UIKit.UIImage? = nil, collapseIcon: UIKit.UIImage? = nil)
+    @objc deinit
+  }
+  public var icons: AircoreMediaPanel.Theme.Icons
+  @objc deinit
+}
+extension AircoreMediaPanel.Theme {
+  public static func light() -> AircoreMediaPanel.Theme
+  public static func dark() -> AircoreMediaPanel.Theme
+}
+extension UIKit.UIColor {
+  public static func hex(_ hexString: Swift.String) -> UIKit.UIColor
+  public static func hex(_ hex: Swift.Int) -> UIKit.UIColor
+}
+public enum ClientError : Foundation.LocalizedError {
+  case notConnected
+  case clientAlreadyDestroyed
+  case missingUserData
+  case customError(message: Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@objc(AIRMediaPanelStyle) public enum MediaPanelStyle : Swift.Int {
+  case widget
+  case bottomBar
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc(AIRMediaPanel) public class MediaPanel : ObjectiveC.NSObject {
+  @objc public init(client: AircoreMediaPanel.Client, channelID: Swift.String, configuration: AircoreMediaPanel.MediaPanelConfiguration, theme: AircoreMediaPanel.Theme? = nil)
+  @objc public func setTheme(_ theme: AircoreMediaPanel.Theme)
+  @objc public func setConfiguration(_ configuration: AircoreMediaPanel.MediaPanelConfiguration)
+  @objc public func present(in viewController: UIKit.UIViewController, style: AircoreMediaPanel.MediaPanelStyle)
+  @objc deinit
+}
+@objc(AIRClientEvent) public enum ClientEvent : Swift.Int {
+  case publishableAPIKeyInvalid
+  case sessionAuthTokenInvalid
+  case sessionAuthTokenMismatch
+  case sessionAuthTokenNearingExpiry
+  case localUserJoined
+  case localUserLeft
+  case localStreamStarted
+  case localStreamStopped
+  case localStreamMuted
+  case localStreamUnmuted
+  case remoteStreamAdded
+  case remoteStreamRemoved
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc(AIRClientLogLevel) public enum ClientLogLevel : Swift.Int {
+  case debug
+  case info
+  case warning
+  case error
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @objcMembers @objc(AIRClient) public class Client : ObjectiveC.NSObject {
+  public typealias EventHandler = (_ channelID: Swift.String, _ userID: Swift.String) -> Swift.Void
+  public typealias ErrorHandler = (_ channelID: Swift.String?, _ error: Swift.Error) -> Swift.Void
+  @objc public var authToken: Swift.String? {
+    @objc get
+  }
+  @objc public var logLevel: AircoreMediaPanel.ClientLogLevel
+  @objc final public let userID: Swift.String
+  @objc public var userDisplayName: Swift.String?
+  @objc public var userAvatarURL: Foundation.URL?
+  @objc public static func create(publishableKey: Swift.String, userID: Swift.String) -> AircoreMediaPanel.Client
+  @objc public static func create(authToken: Swift.String, userID: Swift.String) -> AircoreMediaPanel.Client
+  @objc public func updateAuthToken(_ token: Swift.String, forChannelID channelID: Swift.String)
+  @objc public func on(_ event: AircoreMediaPanel.ClientEvent, handler: @escaping AircoreMediaPanel.Client.EventHandler)
+  @objc public func off(_ event: AircoreMediaPanel.ClientEvent)
+  @objc public func onError(handler: @escaping AircoreMediaPanel.Client.ErrorHandler)
+  @objc(connectToChannelID:) public func connect(channelID: Swift.String)
+  @objc public func disconnect(fromChannelID channelID: Swift.String)
+  @objc public func destroy()
+  @objc deinit
+}
+extension AircoreMediaPanel.MediaPanelStyle : Swift.Equatable {}
+extension AircoreMediaPanel.MediaPanelStyle : Swift.Hashable {}
+extension AircoreMediaPanel.MediaPanelStyle : Swift.RawRepresentable {}
+extension AircoreMediaPanel.ClientEvent : Swift.Equatable {}
+extension AircoreMediaPanel.ClientEvent : Swift.Hashable {}
+extension AircoreMediaPanel.ClientEvent : Swift.RawRepresentable {}
+extension AircoreMediaPanel.ClientLogLevel : Swift.Equatable {}
+extension AircoreMediaPanel.ClientLogLevel : Swift.Hashable {}
+extension AircoreMediaPanel.ClientLogLevel : Swift.RawRepresentable {}
