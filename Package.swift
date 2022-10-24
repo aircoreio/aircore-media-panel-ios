@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "AircoreMediaPanel",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "AircoreMediaPanel",
@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "git@github.com:airtimemedia/AirtimeMedia-iOS.git",
+            url: "https://github.com/airtimemedia/AirtimeMedia-iOS.git",
             .upToNextMajor(from: "1.5.2")
         )
     ],

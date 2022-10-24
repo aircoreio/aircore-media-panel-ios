@@ -195,7 +195,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreGraphics;
 @import ObjectiveC;
+@import UIKit;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -392,23 +394,23 @@ SWIFT_CLASS_NAMED("MediaPanelConfiguration")
 /// MediaPanel Strings that can be changed/localized
 SWIFT_CLASS_NAMED("Strings")
 @interface AIRMediaPanelStrings : NSObject
-/// Title for the “join” button
+/// Title for the “Join” button. Defaults to “Join”
 @property (nonatomic, copy) NSString * _Nonnull joinButton;
-/// Title for the “join” button while joining
+/// Title for the “Join” button while joining. Defaults to “Joining…”
 @property (nonatomic, copy) NSString * _Nonnull joiningButton;
-/// Text shown in the bottom bar before you join the channel
+/// Text shown in the bottom bar before you join the channel. Defaults to “Tap Join to start the audio session”
 @property (nonatomic, copy) NSString * _Nonnull joinButtonTooltip;
-/// Title for the “leave” button
+/// Title for the “Leave” button. Defaults to “Leave”
 @property (nonatomic, copy) NSString * _Nonnull leaveButton;
-/// Title for the “retry” button when something goes wrong
+/// Title for the “Retry” button when something goes wrong. Defaults to “Retry”
 @property (nonatomic, copy) NSString * _Nonnull retryButton;
-/// First line of text shown in the voice panel before someone joins
+/// First line of text shown in the voice panel before someone joins. Defaults to “No one is on the call yet.”
 @property (nonatomic, copy) NSString * _Nonnull emptyCallTitle;
-/// Secong line of text shown in the voice panel before someone joins
+/// Second line of text shown in the voice panel before someone joins. Defaults to “Tap Join below to be the first!”
 @property (nonatomic, copy) NSString * _Nonnull emptyCallSubtitle;
-/// Error message when trying to join a channel that is full
+/// A specific error message when trying to join a channel that is full. Defaults to “The channel is full”
 @property (nonatomic, copy) NSString * _Nonnull channelIsFullLabel;
-/// Generic error message when something goes wrong
+/// A Generic error message shown on the panel. Defaults to “Something went wrong…”
 @property (nonatomic, copy) NSString * _Nonnull genericErrorLabel;
 - (nonnull instancetype)initWithJoinButton:(NSString * _Nonnull)joinButton joiningButton:(NSString * _Nonnull)joiningButton joinButtonTooltip:(NSString * _Nonnull)joinButtonTooltip leaveButton:(NSString * _Nonnull)leaveButton retryButton:(NSString * _Nonnull)retryButton emptyCallTitle:(NSString * _Nonnull)emptyCallTitle emptyCallSubtitle:(NSString * _Nonnull)emptyCallSubtitle channelIsFullLabel:(NSString * _Nonnull)channelIsFullLabel genericErrorLabel:(NSString * _Nonnull)genericErrorLabel OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -419,7 +421,7 @@ SWIFT_CLASS_NAMED("Strings")
 /// The Configuration used to customize the MediaPanel in the collapsed state. Setting values here would override the values set in the parent MediaPanelConfiguration object.
 SWIFT_CLASS_NAMED("CollapsedStateOptions")
 @interface AIRMediaPanelCollapsedStateOptions : NSObject
-/// Maximum number of avatars to show before showing a “+n” label on the side
+/// Maximum number of avatars to show before showing a “+n” label on the side. Defaults to 5.
 @property (nonatomic) NSInteger maxAvatars;
 /// Title for the MediaPanel. Overrides the default configuration for this state only
 @property (nonatomic, copy) NSString * _Nullable panelTitle;
@@ -465,10 +467,40 @@ typedef SWIFT_ENUM_NAMED(NSInteger, AIRMediaPanelStyle, "MediaPanelStyle", open)
 };
 
 
+@class UIColor;
+@class UIFont;
+@class AIRAvatar;
+@class AIRIcons;
 
 /// The Theme can be used to customize the visual aspects of the MediaPanel to conform to your native apps’ branding
 SWIFT_CLASS_NAMED("Theme")
 @interface AIRTheme : NSObject
+/// Creates a theme for a Media Panel
+- (nonnull instancetype)initWithBackgroundColor:(UIColor * _Nullable)backgroundColor primaryColor:(UIColor * _Nullable)primaryColor dangerColor:(UIColor * _Nullable)dangerColor borderRadius:(CGFloat)borderRadius borderWidth:(CGFloat)borderWidth borderColor:(UIColor * _Nullable)borderColor fontFamily:(UIFont * _Nullable)fontFamily textColor:(UIColor * _Nullable)textColor subtextColor:(UIColor * _Nullable)subtextColor primaryContrastColor:(UIColor * _Nullable)primaryContrastColor dangerContrastColor:(UIColor * _Nullable)dangerContrastColor avatar:(AIRAvatar * _Nullable)avatar icons:(AIRIcons * _Nullable)icons OBJC_DESIGNATED_INITIALIZER;
+/// The color of the background of the Media Panel
+@property (nonatomic, strong) UIColor * _Nonnull backgroundColor;
+/// The primary color of the Media Panel, used on the join button and border of the avatars
+@property (nonatomic, strong) UIColor * _Nonnull primaryColor;
+/// The danger color of the Media Panel, used on the leave button
+@property (nonatomic, strong) UIColor * _Nonnull dangerColor;
+/// The border radius of the Media Panel and its buttons.
+@property (nonatomic) CGFloat borderRadius;
+/// The width of the border of the Media Panel and its buttons
+@property (nonatomic) CGFloat borderWidth;
+/// The color of border of the Media Panel and its buttons
+@property (nonatomic, strong) UIColor * _Nonnull borderColor;
+/// The font used on the Media Panel
+@property (nonatomic, strong) UIFont * _Nonnull fontFamily;
+/// The color of main texts of the Media Panel like speakers count, current speaker and error title
+@property (nonatomic, strong) UIColor * _Nonnull textColor;
+/// The color of secondary texts of the Media Panel like the number of avatars not shown, error detail and empty panel message
+@property (nonatomic, strong) UIColor * _Nonnull subtextColor;
+/// The color used for texts with primaryColor backgrounds, like the Join button
+@property (nonatomic, strong) UIColor * _Nonnull primaryContrastColor;
+/// The color used for texts with dangerColor backgrounds, like the Leave button
+@property (nonatomic, strong) UIColor * _Nonnull dangerContrastColor;
+/// The Icons used on the Media Panel
+@property (nonatomic, strong) AIRIcons * _Nonnull icons;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -477,6 +509,11 @@ SWIFT_CLASS_NAMED("Theme")
 /// The shape of a border
 SWIFT_CLASS_NAMED("BorderShape")
 @interface AIRBorderShape : NSObject
+@property (nonatomic) BOOL isCircle;
+/// A rounded border with a radius
++ (AIRBorderShape * _Nonnull)rounded:(CGFloat)radius SWIFT_WARN_UNUSED_RESULT;
+/// A circle border
++ (AIRBorderShape * _Nonnull)circle SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -485,20 +522,48 @@ SWIFT_CLASS_NAMED("BorderShape")
 /// The Avatar is used to represent the user on the MediaPanel
 SWIFT_CLASS_NAMED("Avatar")
 @interface AIRAvatar : NSObject
+/// Creates the Ui parameters used on the avatars of a Media Panel
+- (nonnull instancetype)initWithBackground:(UIColor * _Nullable)background borderShape:(AIRBorderShape * _Nullable)borderShape spacing:(CGFloat)spacing OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class UIImage;
 
 /// The icons shows in a Media Panel
 SWIFT_CLASS_NAMED("Icons")
 @interface AIRIcons : NSObject
+/// Icon shown to the left of the participant count
+@property (nonatomic, strong) UIImage * _Nullable participantsIcon;
+/// Icon shown inside the “leave” button
+@property (nonatomic, strong) UIImage * _Nullable leaveCallIcon;
+/// Icon shown in the microphone button when microphone is on
+@property (nonatomic, strong) UIImage * _Nullable micEnabledIcon;
+/// Icon shown in the microphone button when microphone is off
+@property (nonatomic, strong) UIImage * _Nullable micDisabledIcon;
+/// Icon shown at the top of the panel as an indicator to collape it back
+@property (nonatomic, strong) UIImage * _Nullable collapseIcon;
+- (nonnull instancetype)initWithParticipantsIcon:(UIImage * _Nullable)participantsIcon leaveCallIcon:(UIImage * _Nullable)leaveCallIcon micEnabledIcon:(UIImage * _Nullable)micEnabledIcon micDisabledIcon:(UIImage * _Nullable)micDisabledIcon collapseIcon:(UIImage * _Nullable)collapseIcon OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
+@interface AIRTheme (SWIFT_EXTENSION(AircoreMediaPanel))
+/// The “light” theme for the Media Panel.
++ (AIRTheme * _Nonnull)light SWIFT_WARN_UNUSED_RESULT;
+/// The “dark” theme for the Media Panel.
++ (AIRTheme * _Nonnull)dark SWIFT_WARN_UNUSED_RESULT;
+@end
 
+
+
+@interface UIColor (SWIFT_EXTENSION(AircoreMediaPanel))
+/// Creates a color from an hex string (e.g.: “00ff00”), if not valid color hexString will return black color
++ (UIColor * _Nonnull)hexString:(NSString * _Nonnull)hexString SWIFT_WARN_UNUSED_RESULT;
+/// Creates a color from an hex (e.g.: 0x00ff00), if not valid color hex will return black color
++ (UIColor * _Nonnull)hex:(NSInteger)hex SWIFT_WARN_UNUSED_RESULT;
+@end
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop

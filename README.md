@@ -19,10 +19,12 @@ Go to File > Swift Packages > Reset Package Caches
 
 
 ### API Keys
+
 To start using the MediaPanel you will need to create an app in the [Developer Console](https://developer.aircore.io "Developer Console") and choose between one of the two different API Keys provided to you.
 To learn more about the two different API Keys so that you can choose the right one based on your needs, please refer to [Apps and API Keys](https://docs.aircore.io/key-concepts#apps-and-api-keys "Apps and API Keys")
 
 ### Client initialization
+
 The Client object is the primary controller which powers the MediaPanel. Besides authentication and initializing the low level AircoreMedia SDK under the hood, it allows you to configure user metadata that the MediaPanel relies upon, control logging, and provides methods to connect/disconnect to listen to important events that happen behind the scenes that your app might be interested to plug into.
 The Client allows your app to bring your existing user/channel models and seamlessly integrate them into the Media Panel.
 
@@ -33,8 +35,7 @@ The Client allows your app to bring your existing user/channel models and seamle
 import AircoreMediaPanel
 
 // Use a Publishable API Key directly from the developer console
-let client = Client.create(publishableKey: key, userId: userId)
-
+let client = Client.create(publishableKey: key, userID: userID)
 ```
 
 #### Client initialization with Secret API Key/Session Auth token
@@ -42,9 +43,10 @@ let client = Client.create(publishableKey: key, userId: userId)
 ```swift
 import AircoreMediaPanel
 
- // Use a session auth token provided by your server by communication with the Aircore's provisioning service using the Secret API key
- let client = Client.create(authToken: authToken, userId: userId)
+// Use a session auth token provided by your server by communication with the Aircore's provisioning service using the Secret API key
+let client = Client.create(authToken: authToken, userID: userID)
 ```
+
 Once you create a Client object, you can set up properties for the user that will be used to represent the user on the MediaPanel.
 
 ```swift
@@ -54,15 +56,18 @@ client.userAvatarURL =  "http://user-profile-picture.png"
 
 ### Configuration
 
-To configure the MediaPanel and modify the behavior of the panel itself or change the defaults for the various elements that makeup the panel, create a MediaPanelConfiguration object.  
+To configure the MediaPanel and modify the behavior of the panel itself or change the defaults for the various elements that makeup the panel, create a MediaPanelConfiguration object.
+
 ```swift
 let config = MediaPanelConfiguration(
     panelTitle: "My Channel",
     panelSubtitle: "My Channel is a happy space where people can have fun",
     ...
 )
-```  
-You can configure the text used in every element of the panel by setting the appropriate property.  
+```
+
+You can configure the text used in every element of the panel by setting the appropriate property.
+
 ```swift
 let stringsConfig = MediaPanelConfiguration.Strings(
     joinButton: "Join",
@@ -73,18 +78,20 @@ let stringsConfig = MediaPanelConfiguration.Strings(
     emptyCallTitle: "No one is on the call yet.",
     emptyCallSubtitle: "Tap Join below to be the first!",
     channelIsFullLabel: "The channel is full",
-    genericErrorLabel: "Something went wrong...",
+    genericErrorLabel: "Something went wrong..."
 )
         
 let config = MediaPanelConfiguration(
     ...
-    strings: stringsConfig,
+    strings: stringsConfig
     ...
 )
 ```
 
 #### Collapsed and Expanded State options
-You can further customize the expanded and collapsed state independently.  
+
+You can further customize the expanded and collapsed state independently.
+
 ```swift
 let config = MediaPanelConfiguration(
     ...
@@ -98,13 +105,15 @@ let config = MediaPanelConfiguration(
     expandedStateOptions: MediaPanelConfiguration.ExpandedStateOptions(
         panelTitle:"Expanded Title",
         panelSubtitle: "Expanded Sub-title",
-        joinButton: "Expanded Join",
+        joinButton: "Expanded Join"
         ...
     )
     ...
 )
 ```
+
 #### Examples:
+
 ![Collapsed State](https://docs.aircore.io/ios/mediapanel/assets/collapsed-state.png "Collapsed State") ![Expanded State](https://docs.aircore.io/ios/mediapanel/assets/expanded-state.png "Expanded State")  
 For the complete configuration options, refer to our [configuration docs](https://docs.aircore.io/ios/mediapanel/1.0.0/documentation/aircoremediapanel/mediapanelconfiguration)
 
@@ -132,43 +141,50 @@ let myTheme = Theme(
         spacing: 10
     )
 )
-
 ```
-#### Examples:  
+
+#### Examples:
+
 ![Example 1](https://docs.aircore.io/ios/mediapanel/assets/theme1.png "Example 1") ![Example 1](https://docs.aircore.io/ios/mediapanel/assets/theme2.png "Example 2")  
 
 For the complete theming options, refer to our [theming docs](https://docs.aircore.io/ios/mediapanel/1.0.0/documentation/aircoremediapanel/theme)
 
-### Media Panel  
-Finally, were ready to put all this together to create the MediaPanel and set it up with your existing ViewController!
+### Media Panel
+
+Finally, we're ready to put all this together to create the MediaPanel and set it up with your existing ViewController!
 
 ```swift
+client.connect(channelID: channel)
+
 let panel = MediaPanel(
     client: client,
-    channelId: channel,
+    channelID: channel,
     configuration: configuration,
     theme: myTheme //Optional
 )
+
 panel.present(in: self, style: .bottomBar)
 ```
 
 ### Notifications and Errors
 
-You can subscribe to useful events that may be relevant to your app's business logic, receive errors etc. and respond accordingly
+You can subscribe to useful events that may be relevant to your app's business logic, receive errors etc. and respond accordingly:
 
 ```swift
-//Register event handlers for various events that are of interest for your host app
-client.on(ClientEvents.localUserJoined) { channelID, userId in
+client.on(.localUserJoined) { channelID, userID in
     print("I just joined a call!")
 }
-client.on(ClientEvents.sessionAuthTokenNearingExpiry) { channelID, userId in
-    //Fetch a new auth token from your server and update the client!
+
+client.on(.sessionAuthTokenNearingExpiry) { channelID, userID in
+    // Fetch a new auth token from your server and update the client!
 }
-client.on(ClientEvents.sessionAuthTokenInvalid) { channelID, userId in
-    //Request the server for a new token
+
+client.on(.sessionAuthTokenInvalid) { channelID, userID in
+    // Request the server for a new token
 }
+
 client.onError { channelID, error in
-    //Handle any errors
+    // Handle any errors
 }
 ```
 
@@ -180,11 +196,13 @@ For the complete events reference, refer to our [events docs](https://docs.airco
 When you are done with the panel, you can tear-down the client and the panel as follows:
 
 ```swift
-  // Disconnecting a specific channel id
- client.disconnect(fromChannelID: channel)
-  // Tear down of the client (it will disconnect automatically from all connected channels)
- client.destroy()
+// Disconnecting a specific Channel ID
+client.disconnect(fromChannelID: channel)
+
+// Tear down of the client (it will disconnect automatically from all connected channels)
+client.destroy()
 ```
+
 Once you invoke destroy you won't be able to reuse the client with any new panels and will have to create a new instance of the client.  
 
 ### Reference documentation
@@ -194,18 +212,19 @@ The complete API Reference documentation can be found on [docs.aircore.io](https
 ### Sample apps
 
 1. A SwiftUI example integration can be found [here](https://github.com/aircoreio/aircore-media-panel-ios-samples/tree/main/MediaPanel-SwiftUI)
-2. An UIKit-ObjC example integration can be found [here](https://github.com/aircoreio/aircore-media-panel-ios-samples/tree/main/MediaPanel-UIKit-ObjC)
+2. An UIKit/Swift example integration can be found [here](https://github.com/aircoreio/aircore-media-panel-ios-samples/tree/main/MediaPanel-UIKit-Swift)
+3. An UIKit/ObjC example integration can be found [here](https://github.com/aircoreio/aircore-media-panel-ios-samples/tree/main/MediaPanel-UIKit-ObjC)
 
 ### Minimum versions
+
 - Xcode - 13.3
-- Swift - 5.6
-- iOS - 14.0
+- iOS - 13.0
 
 ### Limitations
 
- - The simulator is not supported on macOS systems with Apple silicon.
- - Bitcode must be **disabled**.
+- The simulator is not supported on macOS systems with Apple Silicon.
+- Bitcode must be **disabled**.
 
 ### Miscellaneous
 
- - Since the MediaPanel requires microphone permissions to function, iOS requires  developers using the microphone permission to set the [**NSMicrophoneUsageDescription** ](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription "**NSMicrophoneUsageDescription** ")
+- Since the MediaPanel requires microphone permissions to function, iOS requires  developers using the microphone permission to set the [**NSMicrophoneUsageDescription** ](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription "**NSMicrophoneUsageDescription** ")

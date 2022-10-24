@@ -6,27 +6,27 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		OCpdnU3p+745aiidMqKOQPG2wg8=
+		abCaBtRIR7zpIk9V70qeF33b+R8=
 		</data>
 		<key>Headers/AircoreMediaPanel-Swift.h</key>
 		<data>
-		BYONLESCtBdM9UQ7i6rKvFoGoXA=
+		t17xgpE5kLtYNy14e4fDT9H/THo=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		b24+H42fml13miGsebQo+vBqLRc=
+		RM6Y71d1G9IPhx4Q1xUtLaezdEw=
 		</data>
 		<key>Modules/AircoreMediaPanel.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		75zPFTHu5vAULHSe7MwXXT5ksTQ=
+		uw5toKvHSAn4bfB5NQYrjSxHCPA=
 		</data>
 		<key>Modules/AircoreMediaPanel.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		ukMncvi04ksovMEdwLRdJgUmZFY=
+		jO/ZVeWaD87UufI4ZkGIFRrSKE4=
 		</data>
 		<key>Modules/AircoreMediaPanel.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		nU05OoOAHOvt2rNc6p7T3Rs9uYw=
+		6BsHdis2htewhZcHr+psYKhL1RA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -47,35 +47,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			hkbLOZHeAaGf9GfjhIeVFccOfYUiLDscbq0QHgCyrts=
+			VI9tXkGE1GtXYQihZtb2EEePpmR69grnKIm3RZHV8eg=
 			</data>
 		</dict>
 		<key>Headers/AircoreMediaPanel-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6G09O5flYhGpFWM//AG/vP0+GCZJWntzIwOh53/syqQ=
+			f9n57OhGrllC5QxtG3vtltiVoKwAN1wvfqUxoZm2bAk=
 			</data>
 		</dict>
 		<key>Modules/AircoreMediaPanel.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			B/a2tVfFG/uzW+ZvLuwY70zhxN7rzKVCz+oGVcp8Ej4=
+			hAYSNN8bjFo3aff5PYxh7U3Ig/WDqm+n211yXuygyik=
 			</data>
 		</dict>
 		<key>Modules/AircoreMediaPanel.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kT2yQHuiwHZX33Mvzgqnq+dCqecP2/4gCBX3PH1cpv0=
+			YsPX6oO9bZl7uGgOTtMwqkdeW+sqqL11URQ1FHuNNJw=
 			</data>
 		</dict>
 		<key>Modules/AircoreMediaPanel.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2LRmlxqcp+/2RUa6wo0++ysldyGvm9hGW5WoTqhcdUE=
+			jopTqD6F+mL98NrxKI2y8Xwt5uuH0+HsLUpkhDVQVJU=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
