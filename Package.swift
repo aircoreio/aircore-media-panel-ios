@@ -8,13 +8,13 @@ let package = Package(
     products: [
         .library(
             name: "AircoreMediaPanel",
-            targets: ["AircoreMediaPanelWrapper"]
+            targets: ["VoicePanelUmbrella"]
         ),
     ],
     dependencies: [
         .package(
             url: "https://github.com/airtimemedia/AirtimeMedia-iOS.git",
-            .upToNextMajor(from: "1.5.2")
+            .upToNextMajor(from: "2.0.3")
         )
     ],
     targets: [
@@ -23,7 +23,7 @@ let package = Package(
             path: "./AircoreMediaPanel.xcframework"
         ),
         .target(
-            name: "AircoreMediaPanelWrapper",
+            name: "VoicePanelUmbrella",
             dependencies: [
                 .product(name: "AirtimeMedia", package: "AirtimeMedia-iOS"),
                 .target(name: "AircoreMediaPanel")
