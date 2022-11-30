@@ -52,7 +52,7 @@ import _Concurrency
   @objc public static func defaultConfiguration() -> AircoreMediaPanel.MediaPanelConfiguration
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(AIRTheme) @objcMembers public class Theme : ObjectiveC.NSObject {
+@objc(AIRTheme) @objcMembers public class Theme : ObjectiveC.NSObject {
   @_hasMissingDesignatedInitializers @objc(AIRBorderShape) @objcMembers public class BorderShape : ObjectiveC.NSObject {
     public var radius: CoreGraphics.CGFloat?
     @objc public var isCircle: Swift.Bool
