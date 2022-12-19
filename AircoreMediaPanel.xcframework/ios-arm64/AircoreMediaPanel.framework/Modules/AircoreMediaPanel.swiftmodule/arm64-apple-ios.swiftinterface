@@ -121,6 +121,7 @@ public enum ClientError : Foundation.LocalizedError {
   @objc public func present(in viewController: UIKit.UIViewController, style: AircoreMediaPanel.MediaPanelStyle)
   public func collapsedView() -> some SwiftUI.View
   
+  @objc public func destroy()
   @objc deinit
 }
 @objc(AIRClientEvent) public enum ClientEvent : Swift.Int {

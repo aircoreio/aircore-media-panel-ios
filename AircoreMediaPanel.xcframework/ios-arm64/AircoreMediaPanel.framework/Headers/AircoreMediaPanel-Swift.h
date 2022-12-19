@@ -356,6 +356,8 @@ SWIFT_CLASS_NAMED("MediaPanel")
 /// \param style the style to use
 ///
 - (void)presentIn:(UIViewController * _Nonnull)viewController style:(enum AIRMediaPanelStyle)style;
+/// Destroys the MediaPanel and removes it from the view hierarchy
+- (void)destroy;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -364,7 +366,7 @@ SWIFT_CLASS_NAMED("MediaPanel")
 @class AIRMediaPanelCollapsedStateOptions;
 @class AIRMediaPanelExpandedStateOptions;
 
-/// This clas allows the MediaPanel to be customized in several ways.
+/// This class allows the MediaPanel to be customized in several ways.
 /// The MediaPanel can have different states. A Collapsed state, Expanded state
 /// or a Widget state. Widget and Collapsed states are mutually exclusive: you
 /// pick either one, and when tapping the widget (or the collapsed panel)
