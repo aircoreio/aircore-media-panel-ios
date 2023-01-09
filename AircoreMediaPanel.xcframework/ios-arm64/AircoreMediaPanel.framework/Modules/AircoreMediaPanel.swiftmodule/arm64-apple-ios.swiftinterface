@@ -1,11 +1,11 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
 // swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AircoreMediaPanel
+import AVFoundation
 import Combine
 import Foundation
 import Swift
 import SwiftUI
-import UIKit.UIImage
 import UIKit
 import UIKit.UIView
 import _Concurrency
@@ -20,7 +20,14 @@ import _Concurrency
     @objc public var emptyCallSubtitle: Swift.String
     @objc public var channelIsFullLabel: Swift.String
     @objc public var genericErrorLabel: Swift.String
-    @objc public init(joinButton: Swift.String = "Join", joiningButton: Swift.String = "Joining...", joinButtonTooltip: Swift.String = "Tap Join to start the audio session", leaveButton: Swift.String = "Leave", retryButton: Swift.String = "Retry", emptyCallTitle: Swift.String = "No one is on the call yet", emptyCallSubtitle: Swift.String = "Tap Join below to be the first!", channelIsFullLabel: Swift.String = "The channel is full", genericErrorLabel: Swift.String = "Something went wrong...")
+    @objc public var speakerLimitModalTitle: Swift.String
+    @objc public var speakerLimitModalSubtitle: Swift.String
+    @objc public var speakerLimitModalDismissButton: Swift.String
+    @objc public var noMicrophonePermissionsModalTitle: Swift.String
+    @objc public var noMicrophonePermissionsModalSubtitle: Swift.String
+    @objc public var noMicrophonePermissionsModalDismissButton: Swift.String
+    @objc public var noMicrophonePermissionsModalGoToSettingsButton: Swift.String
+    @objc public init(joinButton: Swift.String = "Join", joiningButton: Swift.String = "Joining...", joinButtonTooltip: Swift.String = "Tap Join to start the audio session", leaveButton: Swift.String = "Leave", retryButton: Swift.String = "Retry", emptyCallTitle: Swift.String = "No one is on the call yet", emptyCallSubtitle: Swift.String = "Tap Join below to be the first!", channelIsFullLabel: Swift.String = "The channel is full", genericErrorLabel: Swift.String = "Something went wrong...", speakerLimitModalTitle: Swift.String = "Speaker Limit Reached", speakerLimitModalSubtitle: Swift.String = "The number of speakers supported is currently at capacity. Try again when a speaker leaves", speakerLimitModalDismissButton: Swift.String = "OK", noMicrophonePermissionsModalTitle: Swift.String = "Enable Microphone", noMicrophonePermissionsModalSubtitle: Swift.String = "Allow access to your microphone in settings before you can use this feature.", noMicrophonePermissionsModalDismissButton: Swift.String = "OK", noMicrophonePermissionsModalGoToSettingsButton: Swift.String = "Go to Settings")
     @objc deinit
   }
   @objcMembers @objc(AIRMediaPanelCollapsedStateOptions) public class CollapsedStateOptions : ObjectiveC.NSObject {
@@ -45,10 +52,11 @@ import _Concurrency
   @objc public var panelTitle: Swift.String?
   @objc public var panelSubtitle: Swift.String?
   @objc public var showMicrophoneButton: Swift.Bool
+  @objc public var autoPublishMicOnJoin: Swift.Bool
   @objc public var strings: AircoreMediaPanel.MediaPanelConfiguration.Strings
   @objc public var collapsedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.CollapsedStateOptions
   @objc public var expandedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.ExpandedStateOptions
-  @objc public init(panelTitle: Swift.String? = nil, panelSubtitle: Swift.String? = nil, showMicrophoneButton: Swift.Bool = true, strings: AircoreMediaPanel.MediaPanelConfiguration.Strings = Strings(), collapsedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.CollapsedStateOptions = CollapsedStateOptions(), expandedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.ExpandedStateOptions = ExpandedStateOptions())
+  @objc public init(panelTitle: Swift.String? = nil, panelSubtitle: Swift.String? = nil, showMicrophoneButton: Swift.Bool = true, autoPublishMicOnJoin: Swift.Bool = false, strings: AircoreMediaPanel.MediaPanelConfiguration.Strings = Strings(), collapsedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.CollapsedStateOptions = CollapsedStateOptions(), expandedStateOptions: AircoreMediaPanel.MediaPanelConfiguration.ExpandedStateOptions = ExpandedStateOptions())
   @objc public static func defaultConfiguration() -> AircoreMediaPanel.MediaPanelConfiguration
   @objc deinit
 }
@@ -73,16 +81,22 @@ import _Concurrency
   @objc public var primaryContrastColor: UIKit.UIColor
   @objc public var dangerContrastColor: UIKit.UIColor
   @objc(AIRAvatar) @objcMembers public class Avatar : ObjectiveC.NSObject {
+    @objc public var background: UIKit.UIColor
+    @objc public var borderShape: AircoreMediaPanel.Theme.BorderShape
+    @objc public var spacing: CoreGraphics.CGFloat
     @objc public init(background: UIKit.UIColor? = nil, borderShape: AircoreMediaPanel.Theme.BorderShape? = nil, spacing: CoreGraphics.CGFloat = -4)
     @objc deinit
   }
+  @objc public var avatar: AircoreMediaPanel.Theme.Avatar
   @objc(AIRIcons) @objcMembers public class Icons : ObjectiveC.NSObject {
     @objc public var participantsIcon: UIKit.UIImage?
     @objc public var leaveCallIcon: UIKit.UIImage?
     @objc public var micEnabledIcon: UIKit.UIImage?
     @objc public var micDisabledIcon: UIKit.UIImage?
     @objc public var collapseIcon: UIKit.UIImage?
-    @objc public init(participantsIcon: UIKit.UIImage? = nil, leaveCallIcon: UIKit.UIImage? = nil, micEnabledIcon: UIKit.UIImage? = nil, micDisabledIcon: UIKit.UIImage? = nil, collapseIcon: UIKit.UIImage? = nil)
+    @objc public var infoIcon: UIKit.UIImage?
+    @objc public var micPermissionsIcon: UIKit.UIImage?
+    @objc public init(participantsIcon: UIKit.UIImage? = nil, leaveCallIcon: UIKit.UIImage? = nil, micEnabledIcon: UIKit.UIImage? = nil, micDisabledIcon: UIKit.UIImage? = nil, collapseIcon: UIKit.UIImage? = nil, infoIcon: UIKit.UIImage? = nil, micPermissionsIcon: UIKit.UIImage? = nil)
     @objc deinit
   }
   @objc public var icons: AircoreMediaPanel.Theme.Icons
@@ -104,6 +118,9 @@ public enum ClientError : Foundation.LocalizedError {
   public var errorDescription: Swift.String? {
     get
   }
+}
+public protocol EventsLogger {
+  func logEvent(_ event: Swift.String, subsystem: Swift.String)
 }
 @objc(AIRMediaPanelStyle) public enum MediaPanelStyle : Swift.Int {
   case widget
@@ -173,6 +190,9 @@ public enum ClientError : Foundation.LocalizedError {
   @objc(connectToChannelID:) public func connect(channelID: Swift.String)
   @objc public func disconnect(fromChannelID channelID: Swift.String)
   @objc public func destroy()
+  @objc public static var frameworkVersion: Swift.String {
+    @objc get
+  }
   @objc deinit
 }
 extension AircoreMediaPanel.MediaPanelStyle : Swift.Equatable {}

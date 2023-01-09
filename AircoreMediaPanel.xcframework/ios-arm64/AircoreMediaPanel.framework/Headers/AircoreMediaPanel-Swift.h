@@ -282,6 +282,9 @@ SWIFT_CLASS_NAMED("Client")
 - (void)disconnectFromChannelID:(NSString * _Nonnull)channelID;
 /// Disconnect from all channels and tear down the Client. Once destroy is invoked, the client cannot be used anymore.
 - (void)destroy;
+/// Returns the current Framework Version
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull frameworkVersion;)
++ (NSString * _Nonnull)frameworkVersion SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -395,6 +398,10 @@ SWIFT_CLASS_NAMED("MediaPanelConfiguration")
 /// Defaults to <code>true</code>. Set this to <code>false</code> if you are initializing the panel
 /// for a user who can only be in listen mode and cannot turn on the microphone.
 @property (nonatomic) BOOL showMicrophoneButton;
+/// If false, let users explicitly turn on the mic after joining.
+/// If true, automatically turn on the mic to publish after joining.
+/// Default is true
+@property (nonatomic) BOOL autoPublishMicOnJoin;
 /// MediaPanel strings that can be changed/localized.
 @property (nonatomic, strong) AIRMediaPanelStrings * _Nonnull strings;
 /// The configuration used to customize the MediaPanel in the collapsed state.
@@ -407,7 +414,7 @@ SWIFT_CLASS_NAMED("MediaPanelConfiguration")
 @property (nonatomic, strong) AIRMediaPanelExpandedStateOptions * _Nonnull expandedStateOptions;
 /// Creates a new instance of <code>MediaPanelConfiguration</code>. All the values are
 /// optional and will fallback to the defaults if not specified.
-- (nonnull instancetype)initWithPanelTitle:(NSString * _Nullable)panelTitle panelSubtitle:(NSString * _Nullable)panelSubtitle showMicrophoneButton:(BOOL)showMicrophoneButton strings:(AIRMediaPanelStrings * _Nonnull)strings collapsedStateOptions:(AIRMediaPanelCollapsedStateOptions * _Nonnull)collapsedStateOptions expandedStateOptions:(AIRMediaPanelExpandedStateOptions * _Nonnull)expandedStateOptions OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithPanelTitle:(NSString * _Nullable)panelTitle panelSubtitle:(NSString * _Nullable)panelSubtitle showMicrophoneButton:(BOOL)showMicrophoneButton autoPublishMicOnJoin:(BOOL)autoPublishMicOnJoin strings:(AIRMediaPanelStrings * _Nonnull)strings collapsedStateOptions:(AIRMediaPanelCollapsedStateOptions * _Nonnull)collapsedStateOptions expandedStateOptions:(AIRMediaPanelExpandedStateOptions * _Nonnull)expandedStateOptions OBJC_DESIGNATED_INITIALIZER;
 /// Creates a <code>MediaPanelConfiguration</code> instance with the default settings.
 ///
 /// returns:
@@ -444,9 +451,28 @@ SWIFT_CLASS_NAMED("Strings")
 @property (nonatomic, copy) NSString * _Nonnull channelIsFullLabel;
 /// Text shown when an unhandled error happens. Defaults to <code>Something went wrong...</code>.
 @property (nonatomic, copy) NSString * _Nonnull genericErrorLabel;
+/// Text shown in the modal presented when you can’t join because the number of speakers was reached.
+/// Defaults to <code>Speaker Limit Reached</code>.
+@property (nonatomic, copy) NSString * _Nonnull speakerLimitModalTitle;
+/// Second line shown in the modal presented when you can’t join because the number of speakers was reached.
+/// Defaults to <code>The number of speakers supported is currently at capacity. Try again when a speaker leaves</code>.
+@property (nonatomic, copy) NSString * _Nonnull speakerLimitModalSubtitle;
+/// Title to show in the button to dismiss the modal presented when you can’t join because the number of speakers was reached.
+/// Defaults to <code>OK</code>.
+@property (nonatomic, copy) NSString * _Nonnull speakerLimitModalDismissButton;
+/// Text shown in the modal presented when you don’t have microphone usage permissions.
+/// Defaults to <code>Enable Microphone</code>.
+@property (nonatomic, copy) NSString * _Nonnull noMicrophonePermissionsModalTitle;
+/// Second line shown in the modal presented when you don’t have microphone usage permissions.
+/// Defaults to <code>Allow access to your microphone in settings before you can use this feature.</code>.
+@property (nonatomic, copy) NSString * _Nonnull noMicrophonePermissionsModalSubtitle;
+/// Title to show in the button to dismiss the modal presented when you don’t have microphone usage permissions. Defaults to <code>OK</code>.
+@property (nonatomic, copy) NSString * _Nonnull noMicrophonePermissionsModalDismissButton;
+/// Title to show in the button to open the app’s settings shown in the modal presented when you don’t have microphone usage permissions. Defaults to <code>Go to Settings</code>.
+@property (nonatomic, copy) NSString * _Nonnull noMicrophonePermissionsModalGoToSettingsButton;
 /// Creates a new instance of <code>Strings</code>. All the values are
 /// optional and will fallback to the defaults if not specified.
-- (nonnull instancetype)initWithJoinButton:(NSString * _Nonnull)joinButton joiningButton:(NSString * _Nonnull)joiningButton joinButtonTooltip:(NSString * _Nonnull)joinButtonTooltip leaveButton:(NSString * _Nonnull)leaveButton retryButton:(NSString * _Nonnull)retryButton emptyCallTitle:(NSString * _Nonnull)emptyCallTitle emptyCallSubtitle:(NSString * _Nonnull)emptyCallSubtitle channelIsFullLabel:(NSString * _Nonnull)channelIsFullLabel genericErrorLabel:(NSString * _Nonnull)genericErrorLabel OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithJoinButton:(NSString * _Nonnull)joinButton joiningButton:(NSString * _Nonnull)joiningButton joinButtonTooltip:(NSString * _Nonnull)joinButtonTooltip leaveButton:(NSString * _Nonnull)leaveButton retryButton:(NSString * _Nonnull)retryButton emptyCallTitle:(NSString * _Nonnull)emptyCallTitle emptyCallSubtitle:(NSString * _Nonnull)emptyCallSubtitle channelIsFullLabel:(NSString * _Nonnull)channelIsFullLabel genericErrorLabel:(NSString * _Nonnull)genericErrorLabel speakerLimitModalTitle:(NSString * _Nonnull)speakerLimitModalTitle speakerLimitModalSubtitle:(NSString * _Nonnull)speakerLimitModalSubtitle speakerLimitModalDismissButton:(NSString * _Nonnull)speakerLimitModalDismissButton noMicrophonePermissionsModalTitle:(NSString * _Nonnull)noMicrophonePermissionsModalTitle noMicrophonePermissionsModalSubtitle:(NSString * _Nonnull)noMicrophonePermissionsModalSubtitle noMicrophonePermissionsModalDismissButton:(NSString * _Nonnull)noMicrophonePermissionsModalDismissButton noMicrophonePermissionsModalGoToSettingsButton:(NSString * _Nonnull)noMicrophonePermissionsModalGoToSettingsButton OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -558,6 +584,8 @@ SWIFT_CLASS_NAMED("Theme")
 @property (nonatomic, strong) UIColor * _Nonnull primaryContrastColor;
 /// Color of text that appears on the on danger color items like buttons.
 @property (nonatomic, strong) UIColor * _Nonnull dangerContrastColor;
+/// The UI parameters for the avatars shown in a Media Panel.
+@property (nonatomic, strong) AIRAvatar * _Nonnull avatar;
 /// The Icons used on the Media Panel
 @property (nonatomic, strong) AIRIcons * _Nonnull icons;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -581,6 +609,12 @@ SWIFT_CLASS_NAMED("BorderShape")
 /// The Avatar is used to represent the user avatar on the MediaPanel
 SWIFT_CLASS_NAMED("Avatar")
 @interface AIRAvatar : NSObject
+/// Tint color of the shimmer effect shown while loading the avatar.
+@property (nonatomic, strong) UIColor * _Nonnull background;
+/// Defines if a border is a circle or a square with ways to customize the border radius.
+@property (nonatomic, strong) AIRBorderShape * _Nonnull borderShape;
+/// Spacing between avatars in the collapsed bar.
+@property (nonatomic) CGFloat spacing;
 /// Creates a new instance of <code>Avatar</code>. All the values are
 /// optional and will fallback to the defaults if not specified.
 - (nonnull instancetype)initWithBackground:(UIColor * _Nullable)background borderShape:(AIRBorderShape * _Nullable)borderShape spacing:(CGFloat)spacing OBJC_DESIGNATED_INITIALIZER;
@@ -603,12 +637,17 @@ SWIFT_CLASS_NAMED("Icons")
 @property (nonatomic, strong) UIImage * _Nullable micDisabledIcon;
 /// Icon shown at the top of the expanded panel as an indicator to collape it back.
 @property (nonatomic, strong) UIImage * _Nullable collapseIcon;
+/// Icon shown at the top of information modal
+@property (nonatomic, strong) UIImage * _Nullable infoIcon;
+/// Icon shown at the top of mic permissions icon
+@property (nonatomic, strong) UIImage * _Nullable micPermissionsIcon;
 /// Creates a new instance of <code>Icons</code>. All the values are
 /// optional and will fallback to the defaults if not specified.
-- (nonnull instancetype)initWithParticipantsIcon:(UIImage * _Nullable)participantsIcon leaveCallIcon:(UIImage * _Nullable)leaveCallIcon micEnabledIcon:(UIImage * _Nullable)micEnabledIcon micDisabledIcon:(UIImage * _Nullable)micDisabledIcon collapseIcon:(UIImage * _Nullable)collapseIcon OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithParticipantsIcon:(UIImage * _Nullable)participantsIcon leaveCallIcon:(UIImage * _Nullable)leaveCallIcon micEnabledIcon:(UIImage * _Nullable)micEnabledIcon micDisabledIcon:(UIImage * _Nullable)micDisabledIcon collapseIcon:(UIImage * _Nullable)collapseIcon infoIcon:(UIImage * _Nullable)infoIcon micPermissionsIcon:(UIImage * _Nullable)micPermissionsIcon OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
 
 
 @interface AIRTheme (SWIFT_EXTENSION(AircoreMediaPanel))
@@ -619,13 +658,13 @@ SWIFT_CLASS_NAMED("Icons")
 @end
 
 
-
 @interface UIColor (SWIFT_EXTENSION(AircoreMediaPanel))
 /// Creates a color from an hex string (e.g.: “00ff00”), if not valid color hexString will return black color
 + (UIColor * _Nonnull)hexString:(NSString * _Nonnull)hexString SWIFT_WARN_UNUSED_RESULT;
 /// Creates a color from an hex (e.g.: 0x00ff00), if not valid color hex will return black color
 + (UIColor * _Nonnull)hex:(NSInteger)hex SWIFT_WARN_UNUSED_RESULT;
 @end
+
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
