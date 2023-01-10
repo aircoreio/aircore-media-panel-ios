@@ -315,6 +315,10 @@ typedef SWIFT_ENUM_NAMED(NSInteger, AIRClientEvent, "ClientEvent", open) {
   AIRClientEventRemoteStreamAdded = 10,
 /// A remote user’s stream was removed from the channel
   AIRClientEventRemoteStreamRemoved = 11,
+/// A remote user presence joined the channel
+  AIRClientEventRemoteUserJoined = 12,
+/// A remote user presence left the channel
+  AIRClientEventRemoteUserLeft = 13,
 };
 
 /// Log Levels

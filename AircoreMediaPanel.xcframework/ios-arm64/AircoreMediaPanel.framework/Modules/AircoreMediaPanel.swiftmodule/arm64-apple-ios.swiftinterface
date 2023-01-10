@@ -141,7 +141,7 @@ public protocol EventsLogger {
   @objc public func destroy()
   @objc deinit
 }
-@objc(AIRClientEvent) public enum ClientEvent : Swift.Int {
+@objc(AIRClientEvent) public enum ClientEvent : Swift.Int, Swift.CaseIterable {
   case publishableAPIKeyInvalid
   case sessionAuthTokenInvalid
   case sessionAuthTokenMismatch
@@ -154,8 +154,14 @@ public protocol EventsLogger {
   case localStreamUnmuted
   case remoteStreamAdded
   case remoteStreamRemoved
+  case remoteUserJoined
+  case remoteUserLeft
   public init?(rawValue: Swift.Int)
+  public typealias AllCases = [AircoreMediaPanel.ClientEvent]
   public typealias RawValue = Swift.Int
+  public static var allCases: [AircoreMediaPanel.ClientEvent] {
+    get
+  }
   public var rawValue: Swift.Int {
     get
   }
